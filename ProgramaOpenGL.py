@@ -1,15 +1,20 @@
 from OpenGL.GL import *
 from glew_wish import *
 import glfw
+import random
 
 
 def main():
+
+    #inicia glfw 
     if not glfw.init():
         return
+
+    #crea ventana independientemente del SO que usemos
     window = glfw.create_window( 800, 600, "Mi ventana", None, None)
 
 
-    #Configuracion OpenGL
+    #Configuramos OpenGL
     glfw.window_hint(glfw.SAMPLES, 4)
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
@@ -44,17 +49,28 @@ def main():
     print(version_shaders)
 
     while not glfw.window_should_close(window):
-        glViewport(0,0,800,600) #window size
-        glClearColor(1,0.8,0,1) #colores rgb
+        
+        c1= random.random()
+        c2= random.random()
+        c3= random.random()
+
+        glViewport(0,0,800,600) 
+        glClearColor(c1, c2, c3,1 )
+
+
+        #borra el contenido de la ventana
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-
         #Dibujo
+
+        #preguntar si hubo entradas de perifericos (teclado, mouse, gamepad, etc)
         glfw.poll_events()
+        #intercambia los buffers
         glfw.swap_buffers(window)
 
-
+    #se destruye la ventana para liberar memoria
     glfw.destroy_window(window)
+
+    #termina los procesos que inicio glfw.init
     glfw.terminate()
 
 
